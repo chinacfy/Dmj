@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>健康平台学生请假系统</title>
+    <meta name="renderer" content="webkit">
+	<style>
+		body,html{
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+		}
+		div {
+			flex-shrink: 0;
+		}
+		span{
+			flex-shrink: 0;
+		}
+		input{
+			flex-shrink: 0;
+			flex-grow: 1;
+			overflow: hidden;
+		}
+		#header{
+			background-color: #233c73;
+		}
+		#header_Logo{
+			margin-left: 10%;
+		}
+		#container{
+			width: 80%;
+		}
+		#backo{
+			width:30px;
+			height:32px;
+			margin:0px;
+			padding: 2px;
+			background: transparent;
+			border:0px;
+		}
+		
+		.button_cl{
+			background-color: #009688;
+			font-size: 12px;
+			text-decoration:none;
+			color: white;
+			height:30px;
+			border:0px;
+			margin-right: 10px;
+			padding:0px 12px;
+		}
+		ul li {list-style: none; float: left;}
+		#listTitle li{
+			font-size: 18px;
+		}
+		#column1 table{
+			border-collapse:collapse;
+			margin-top: 15px;
+			font-size: 14px;
+		}
+		#column1 table td{
+			border: 1px solid #e7e7e7;
+			height: 100%;
+			margin: 0px;
+			padding:8px 10px;
+			color: #717171;
+			background-color: #f2f2f2;
+		}
+		
+		@media screen and (max-width:768px){
+			#container{
+				width: 95%;
+			}
+			#header_Logo{
+				margin: 0px;
+			}
+			#list_type{
+				width:10%;
+			}
+		}
+
+	</style>
+	<script>
+		
+		var backtoMain;
+		var clean;
+		var data_idx = new Array();
+		var data_obj = new Array();
+		
+		function button_jump(toWhere){
+			console.log(toWhere);
+			switch(toWhere){
+				default:
+					//console.log(toWhere);
+					break;
+				case "新增请假":
+					document.getElementById("applicationList").style.display = "none";
+					document.getElementById("newApply").style.display = "flex";
+					document.getElementById("rejectList").style.display = "none";
+					document.getElementById("title").innerHTML = "新增请假申请";
+					document.getElementById("vir_but").innerHTML = "提交";
+					backtoMain = true;
+					break;
+				case "被驳回列表":
+					document.getElementById("applicationList").style.display = "none";
+					document.getElementById("newApply").style.display = "none";
+					document.getElementById("rejectList").style.display = "";
+					document.getElementById("title").innerHTML = "新增请假申请";
+					backtoMain = true;
+					break;
+				case "backo":
+					if(backtoMain){
+						document.getElementById("applicationList").style.display = "";
+						document.getElementById("newApply").style.display = "none";
+						document.getElementById("rejectList").style.display = "none";
+						document.getElementById("title").innerHTML = "请假列表";
+						backtoMain = false;
+						console.log("true");
+					}
+					else{
+						window.history.go(-1);
+						console.log("false");
+					}
+					console.log("backo")
+					break;
+				case "详情":
+					document.getElementById("applicationList").style.display = "none";
+					document.getElementById("newApply").style.display = "flex";
+					document.getElementById("rejectList").style.display = "none";
+					document.getElementById("title").innerHTML = "新增请假申请";
+					document.getElementById("vir_but").innerHTML = "销假";
+					backtoMain = true;
+					break;
+			}
+			console.log(backtoMain);
+		}
+		function list_init(){
+			document.getElementById("date_list").innerHTML = getDate(1);
+			document.getElementById("state_list").innerHTML = "审核通过";
+			document.getElementById("type_list").innerHTML = "事假";
+		}
+		
+		
+		function form_init(){
+			
+			document.getElementById("idNum").value = "201802020102";
+			document.getElementById("idName").value = "鲍杰";
+			document.getElementById("phoneNum").value = "18767101688";
+			document.getElementById("monitor").value = "徐磊";
+					
+			document.getElementById("startDate").value = getDate(0);
+			document.getElementById("finDate").value = getDate(0);
+		}
+		
+		
+		function ReadCookie(cookie_name){
+			if (document.cookie.length > 0){
+				cookie_start = document.cookie.indexOf(cookie_name + "=")
+				if (cookie_start != -1){
+					cookie_start = cookie_start + cookie_name.length + 1
+					cookie_end = document.cookie.indexOf(";", cookie_start)
+					if (cookie_end == -1) {
+						cookie_end = document.cookie.length
+					}
+					return unescape(document.cookie.substring(cookie_start,cookie_end))
+				}
+			}
+			return ""
+		}
+		
+		function getDate(form){
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth()+1;
+			var day = date.getDate();
+			var dateReturn;
+			if(month<10){
+				month = "0" + month;
+			}
+			if(day<10){
+				day = "0" + day;
+			}
+			switch(form){
+				default:
+					return "Error: Data type undefine"
+					break;
+				case 0:
+					dateReturn = year + "-" + month + "-" + day;
+					return dateReturn;
+					break;
+				case 1:
+					dateReturn = month + "月" + day + "日";
+					return dateReturn;
+			}
+		}
+		function suitWidth(){
+			var visual_width = document.body.clientWidth;
+			var default_width = 450;
+			var scale_propotion;
+			console.log(visual_width);
+			scale_propotion = visual_width/default_width;
+			console.log(scale_propotion);
+			if(scale_propotion < 1){
+				document.body.style.zoom = scale_propotion;
+				//document.body.style.marginTop = 0;
+			}
+			else{}
+		}
+	</script>
+<script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="chrome-extension://donbcfbmhbcapadipfkeojnmajbakjdc/dist/ruffle.js?uniqueMessageSuffix=19367122778"></script></head>
+
+<body onresize="suitWidth()" onload="suitWidth()">
+	<div id="header">
+        <div id="header_Logo">
+            <a class="layui-logo" href="https://tim120702.github.io/at/login.html">
+                <img src="../static/image/qingJia.png">
+            </a>
+        </div>
+    </div>
+	<center>
+	<div id="container" style="min-width: 450px;">
+    
+		<div id="titleColumn" style="border-bottom:1px solid #ddd ;padding:15px 0;">
+			<div style="float:left;">
+				<button id="backo" onclick="button_jump(this.id)">
+					<img src="../static/image/back.png" style="width:26px;height:28px;text-align:left;">
+				</button>
+			</div>
+			<div id="title" style="font-size:18px;text-align:center;">请假列表</div>
+		</div>
+	
+		<div id="applicationList" style="text-align: left;width:100%;">
+			
+			<div style="padding:0;margin:0;padding-top:5px;margin-bottom: 10px;">
+			   <p style="color:red;font-size:15px;font-weight:600;">提示：请假返校后，需及时当面向辅导员销假！</p>
+				<input type="button" class="button_cl" value="新增请假" onclick="button_jump(this.value)">
+				<input type="button" class="button_cl" value="被驳回列表" onclick="button_jump(this.value)">
+			</div>
+			
+			<div class="list" style="padding-top: 10px;">
+				<div class="weui-cells">
+					<table style="width:100%;font-size: 18px;" cellspacing="0" cellpadding="0">
+					<tbody><tr>
+						<td style="width:35%;padding-left: 10px;" id="list_date">开始日期</td>
+						<td style="width:30%; padding-left: 10px;" id="list_type">类型</td>
+						<td style="padding-left: 10px;">状态</td>
+					</tr>
+					<tr>
+					<td>&nbsp;</td>						
+					</tr>
+					<tr>
+						<td style="width:30%;padding-left: 10px;" id="date_list">10月07日</td>
+						<td style="width:30%;" id="type_list">事假</td>
+						<td id="state_list">审核通过</td>
+						<td id="jump" style="float:right;">
+							<span style="color:#0088ff" value="" onclick="button_jump(this.innerHTML)">详情</span>
+							<img src="../static/image/right.png" style="height: 16px;width: 13px;margin-left: 5px;">
+						</td>
+					</tr>
+				</tbody></table>
+				</div>
+			</div>
+			
+		</div>
+	
+		<div id="newApply" style="text-align: left;font-size: 15px;flex-direction: column;display: none;">
+		<div style="border-bottom:1px solid #ddd ;padding:15px 0px;margin-top: 10px;display: flex;">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">账号</span>
+			<input type="text" style="height: 28px;border:0px;font-size: 15px;" id="idNum" readonly="201804000424">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">姓名</span>
+			<input type="text" style="height: 28px;border:0px;font-size: 15px;" id="idName" readonly="">
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd;display: flex;">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">联系方式</span>
+			<input type="text" value="请输入手机号" style="height: 28px;border:0px;font-size: 15px;" id="phoneNum" readonly="">
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd ;display: flex;align-items: center;">
+			<span style="flex-basis: 100px;height:28px;padding-left:10px;">辅导员</span>
+			<input type="text" style="height: 38px;border:1px solid #ddd;font-size: 15px;padding-left: 10px;" id="monitor" readonly="">
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd ;height:28px;display: flex;" class="radio">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">请假类型</span>
+			<input type="radio" id="radio-1" value="1" name="radio" checked="" style="flex-grow: 0;">
+			<span>事假</span>
+			<span style="margin:0px 10px">&nbsp;</span>
+			<input type="radio" id="radio-2" value="2" name="radio" style="flex-grow: 0;">
+			<span>病假</span>
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd ;display: flex;align-items: center"> 
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">所在校区</span>
+			<input type="text" style="height: 38px;border:1px solid #ddd;font-size: 15px;padding-left: 10px;" value="主校区" readonly="">
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd ;display: inline-flex;align-items: center;flex:100%;">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">开始日期</span>
+			<input type="text" value="开始日期" style="width:100px;height: 28px;text-align:center;border:0px;font-size: 15px;" id="startDate" readonly="">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">结束日期</span>
+			<input type="text" value="结束日期" style="width:100px;height: 28px;text-align: center;border:0px;font-size: 15px;" id="finDate" readonly="">
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd ;display: flex;align-items: center;">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">出行方式</span>
+			<input type="text" style="height: 38px;border:1px solid #ddd;font-size: 15px;padding-left: 10px;" value="公共汽车">
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd;display: flex;align-items: center;">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">外出地址</span>
+			<input type="text" style="width:50px;height: 28px;border:0px;font-size: 15px;" value="河南" readonly="">
+			<span>省</span>
+			<input type="text" style="width:50px;height: 28px;border:0px;font-size: 15px;margin-left: 3%;" value="郑州" readonly="">
+			<span>市</span>
+			<input type="text" style="width:50px;height: 28px;border:0px;font-size: 15px;margin-left: 3%;" value="中原" readonly="">
+			<span>县/区</span>
+		</div>
+		<div style="padding:15px 0px;display: flex;">
+			<span style="flex-basis: 100px;height:28px;display:inline-block; padding-left:10px;">请假事由</span>
+			<input type="text" value="请输入请假事由" style="height: 20px;vertical-align:text-top; margin-top：0px;border:0px;color:#ddd;font-size: 15px;">
+			<div style="height:70px;">&nbsp;</div>
+		</div>
+		<div style="padding:15px 0px; border-bottom:1px solid #ddd;display: flex;">
+			<p style="padding-left: 120px;">提示：若需请7天以上的假，需在<a href="https://cms.v.zzu.edu.cn/zz_portal/index" target="_blank" class="text-blue">网上办事大厅</a>办理</p>
+		</div>
+		<center>
+		<div style="margin-top: 20px;">
+			<button style="width:88px;height:45px;font-size: 15px;color:white;background-color: #30aaff;border:0px;" onclick="button_jump(&#39;backo&#39;)" id="vir_but">销假</button>
+		</div>
+		</center>
+	</div>
+	
+		<div id="rejectList" style="text-align: center;display: none;">
+
+			<div id="column1" style="width: 100%;align-self: center">
+				<table style="width:100%;" cellspacing="0" cellpadding="0">
+					<tbody><tr>
+						<td style="width:20%;">开始日期</td>
+						<td style="width:12%;">类型</td>
+						<td>状态</td>
+						<td>操作</td>
+					</tr>
+					<tr>
+						<td colspan="4" style="text-align: center;">暂无被驳回信息</td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+	</div>
+	</center>
+	<remove-web-limits-iqxin id="rwl-iqxin" class="rwl-exempt" style="position: fixed; top: 2px; left: 0px;"><qxinbutton type="qxinbutton" id="rwl-setbtn"> set </qxinbutton> <lalala style="cursor:move; font-size:12px;">限制解除</lalala> <input type="checkbox" name="" id="black_node"><style type="text/css">#rwl-iqxin{position:fixed;transform:translate(-95px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin #rwl-setbtn{margin: 0 4px 0 0;padding: 0 0 0 4px;border: none;border-radius: 2px;cursor: pointer;background: #fff;color: #000;} </style></remove-web-limits-iqxin><div><div class="_th-container">
+    
+<div class="_th_cover-all-show-times _th_hidden">
+    <div class="_th_times">x1</div>
+</div><style type="text/css">
+        ._th-container ._th-item {
+            margin-bottom: 3px;
+            position: relative;
+            width: 0;
+            height: 0;
+            cursor: pointer;
+            opacity: .3;
+            background-color: aquamarine;
+            border-radius: 100%;
+            text-align: center;
+            line-height: 30px;
+            -webkit-transition: all .35s;
+            -o-transition: all .35s;
+            transition: all .35s;
+            right: 30px;
+        }
+
+        ._th-container ._th-item, ._th-container ._th-click-hover, ._th_cover-all-show-times ._th_times {
+            -webkit-box-shadow: 4px 5px 10px 6px #b2b2b2;
+            box-shadow: 4px 5px 10px 6px #b2b2b2;
+        }
+
+        ._th-container:hover ._th-item._item-x2 {
+            margin-left: 18px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px
+        }
+
+        ._th-container:hover ._th-item._item-x-2 {
+            margin-left: 17px;
+            width: 38px;
+            height: 38px;
+            line-height: 38px
+        }
+
+        ._th-container:hover ._th-item._item-xx2 {
+            width: 36px;
+            height: 36px;
+            margin-left: 16px;
+            line-height: 36px
+        }
+
+        ._th-container:hover ._th-item._item-xx-2 {
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            margin-left: 14px
+        }
+
+        ._th-container:hover ._th-item._item-reset {
+            width: 30px;
+            line-height: 30px;
+            height: 30px;
+            margin-left: 10px
+        }
+
+        ._th-click-hover {
+            position: relative;
+            -webkit-transition: all .5s;
+            -o-transition: all .5s;
+            transition: all .5s;
+            height: 45px;
+            width: 45px;
+            cursor: pointer;
+            opacity: .6;
+            border-radius: 100%;
+            background-color: aquamarine;
+            text-align: center;
+            line-height: 45px;
+            right: 0
+        }
+
+        ._th-container:hover {
+            left: -5px
+        }
+
+        ._th-container {
+            font-size: 12px;
+            -webkit-transition: all .5s;
+            -o-transition: all .5s;
+            transition: all .5s;
+            left: -30px;
+            top: 20%;
+            position: fixed;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            z-index: 100000;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            display: flex;
+            width: 58px;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                    flex-direction: row;
+        }
+
+        ._th-container ._th-item:hover {
+            opacity: .8;
+            background-color: #5fb492;
+            color: aliceblue
+        }
+
+        ._th-container ._th-item:active {
+            opacity: .9;
+            background-color: #1b3a26;
+            color: aliceblue
+        }
+
+        ._th-container:hover ._th-click-hover {
+            opacity: .8
+        }
+
+        ._th-container:hover ._th-item {
+            opacity: .6;
+            right: 0
+        }
+
+        ._th-container ._th-click-hover:hover {
+            opacity: .8;
+            background-color: #5fb492;
+            color: aliceblue
+        }
+
+        ._th_cover-all-show-times {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            opacity: 1;
+            font-weight: 900;
+            font-size: 30px;
+            color: #4f4f4f;
+            background-color: rgba(0, 0, 0, 0.1)
+        }
+
+        ._th_cover-all-show-times._th_hidden {
+            z-index: -99999;
+            opacity: 0;
+            -webkit-transition: 1s all;
+            -o-transition: 1s all;
+            transition: 1s all
+        }
+
+        ._th_cover-all-show-times ._th_times {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(127, 255, 212, 0.51);
+            text-align: center;
+            line-height: 300px;
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            margin-top: -150px;
+            margin-right: -150px
+        }
+        </style></div><script>
+		list_init();
+		form_init();
+	</script>

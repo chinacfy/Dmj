@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0, user-scalable=no;">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+		<meta http-equiv="expires" content="Wed, 26 Feb 2007 08:21:57 GMT">
+		<style> 
+			BODY {width:400px;margin:0px auto; font-size:15px;font-family:"宋体";text-align: left;}
+			#header{WIDTH: 100%; HEIGHT: 45px;background:url("../static/image/bar_jksb.png");background-repeat: no-repeat;}
+			ul li {list-style: none; float: left;}
+			.herf_button{
+				background:#FFFFFF;
+				color:#00C;
+				border:none;
+				font-size: 15px;
+				font-weight: 200;
+			}
+			.informs{
+				color:#006677;
+			}
+		</style>
+			<script type="text/javascript">
+			var data_idx = new Array();
+			var data_obj = new Array();
+			function init(){
+				init_date();
+				init_inform();
+			}
+			function init_inform(){
+				document.getElementById("idNum").innerHTML = "201802020102";
+				document.getElementById("idName").innerHTML = "鲍杰";
+				document.getElementById("school").innerHTML = "电气工程学学院";
+				document.getElementById("monitor").innerHTML = "徐磊";
+				document.getElementById("dormitory").innerHTML = "主校区-荷园8号楼-C单元.01户-13-18房";
+			}
+		
+			function init_date(){
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth()+1;
+				var day = date.getDate();
+				if(month<10){
+					month = "0" + month;
+				}
+				if(day<10){
+					day = "0" + day;
+				}
+				document.getElementById("date_update").innerHTML = year + "年" +month + "月" + day + "日";
+				document.getElementById("time_update").innerHTML = year + "-" +month + "-" + day + " " + "08:05";
+				fillDate(year,month,day);
+			}
+			function judgeMonth(month,year){
+				var largeMonth = new Array(1,3,5,7,8,10,12);
+				var smallMonth = new Array(4,6,9,11);
+				var monthKind;
+				for(var j=0;j<largeMonth.length;j++){
+					if(month == largeMonth[j]){
+					monthKind = 1;
+					}
+				}
+				for(var j=0;j<smallMonth.length;j++){
+					if(month == smallMonth[j]){
+						monthKind = 0;						}
+					}
+				if(month == 2){
+					if(year%4 != 0){
+						monthKind = 2.1;
+					}
+					else{
+						if(year%100 == 0){
+							monthKind = 2.1;
+						}
+						else{
+							monthKind = 2.2;
+						}
+					}
+				}
+				return monthKind;
+			}
+			function fillDate(year,month,day){
+				var count = 0;
+				var count_1 = 0;
+				var dayinmonth;
+				for(var i=11;i<25;i++){
+					day_1 = day - count;
+					month_1 = month;
+					if (day_1 <= 0){
+						month_1 = month - 1;
+						switch(judgeMonth(month_1,year)){
+							case 0:
+								dayinmonth = 30;
+								break;
+							case 1:
+								dayinmonth = 31;
+								break;
+							case 2.1:
+								dayinmonth = 28;
+								break;
+							case 2.2:
+								dayinmonth = 29;
+								break;
+							default:
+								break;
+						}
+						day_1 = dayinmonth - count_1;
+						count_1++;	
+					}
+					if(month_1<10){
+						month_1 = "0" + month_1;
+					}
+					if(day_1<10){
+						day_1 = "0" + day_1;
+					}
+					document.getElementById(i).innerHTML = month_1+"月"+day_1+"日"+"<td><img src='../static/image/ok2020.png'></td>";
+					count++;
+					if(i == 14){i = 20;}
+				}
+			}
+		
+		
+		</script>
+		<title>郑州大学统一身份认证平台</title>
+	</head><remove-web-limits-iqxin id="rwl-iqxin" class="rwl-exempt" style="position: fixed; top: 2px; left: 0px;"><qxinbutton type="qxinbutton" id="rwl-setbtn"> set </qxinbutton> <lalala style="cursor:move; font-size:12px;">限制解除</lalala> <input type="checkbox" name="" id="black_node"><style type="text/css">#rwl-iqxin{position:fixed;transform:translate(-95px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin #rwl-setbtn{margin: 0 4px 0 0;padding: 0 0 0 4px;border: none;border-radius: 2px;cursor: pointer;background: #fff;color: #000;} </style></remove-web-limits-iqxin>
+	
+	<body>
+		<div style="MARGIN:0 auto; left: 0px;WIDTH: 360px; min-HEIGHT:540px;">
+			<div style="WIDTH: 100%; HEIGHT: 10px;"></div>
+			<div id="header"></div>
+				<div style="WIDTH: 100%; HEIGHT: 100%;float:left;margin-bottom: 5px;">
+					<div style="border-bottom: 0.5px solid #e3e3e3;padding:6px 0px;padding-left: 5px;color: #bb0000;">选择填报人和填报类型</div>
+					<div style="border-bottom: 0.5px solid #e3e3e3;padding:10px 0px;">
+						<span style="margin-right:50px;">填报类型：</span>
+						<input type="radio" value="每日填报" checked="">
+						<span>每日填报</span>
+					</div>
+					<div style="border-bottom: 0.5px solid #e3e3e3;padding:10px 0px;">
+						<div style="margin-bottom: 4px;">
+							<span>填报日：</span>
+							<span id="date_update">2021年10月07日</span>
+							<span style="padding-left: 3px;color: green">今日您已经填报过了</span>
+						</div>
+						<div style="margin-top:  4px">
+							<span>填报时间:</span>
+							<span id="time_update">2021-10-07 08:05</span>
+							<span><input type="button" class="herf_button" value="〖查看上报历史〗" onclick="window.location.href=&#39;login.html&#39;"></span>
+						</div>
+					</div>
+					<div style="border-bottom: 0.5px solid #e3e3e3;">
+						<table width="100%" style="color:#ff00ff">
+							<tbody><tr><td id="11">10月07日<img src="../static/image/ok2020.png"></td>
+							<td id="12">10月06日<img src="../static/image/ok2020.png"></td>
+							<td id="13">10月05日<img src="../static/image/ok2020.png"></td>
+							<td id="14">10月04日<img src="../static/image/ok2020.png"></td>
+						</tr></tbody></table>
+					</div>
+					<div style="border-bottom: 0.5px solid #e3e3e3;">
+						<table width="100%" style="color:#ff00ff">
+							<tbody><tr><td id="21">10月03日<img src="../static/image/ok2020.png"></td>
+							<td id="22">10月02日<img src="../static/image/ok2020.png"></td>
+							<td id="23">10月01日<img src="../static/image/ok2020.png"></td>
+							<td id="24">09月30日<img src="../static/image/ok2020.png"></td>
+						</tr></tbody></table>
+					</div>
+					<div style="border-bottom: 0.5px solid #e3e3e3;padding-bottom: 5px;">
+						<div style="margin: 0;padding:0;">
+							<span style="color:#a03495">个人基本信息：</span>
+							<input type="button" class="herf_button" value="〖切换账号〗" onclick="window.location.href=&#39;login.html&#39;">
+							<input type="button" class="herf_button" value="〖上载照片〗" onclick="window.location.href=&#39;login.html&#39;">
+						</div>
+						<div>
+							<span>所属院系：</span>
+							<span id="school" style="color: blue">信息工程学院</span>
+							<input type="button" class="herf_button" value="〖查看照片〗" onclick="window.location.href=&#39;login.html&#39;" style="color:blue;">
+						</div>
+						<div>
+							<span>学号：</span>
+							<span id="idNum" class="informs">201804000424</span>
+							<span>姓名：</span>
+							<span id="idName" class="informs">严根</span>
+						</div>
+						<div>
+							<span>身份：</span>
+							<span class="informs">本科生</span>
+							<input type="button" class="herf_button" value="〖宿舍开门二维码〗" onclick="window.location.href=&#39;login.html&#39;" style="color:#ff00ff">
+						</div>
+						<div>
+							<span>你的辅导员：</span>
+							<span id="monitor" class="informs">孙燚</span>
+						</div>
+						<div>
+							<span>宿舍：</span>
+							<span id="dormitory" class="informs">主校区-荷园8号楼-B单元.05户-13-18</span>
+						</div>
+						<div>
+							<input type="button" class="herf_button" value="〖学生请假系统〗" onclick="window.location.href='BjRes.html';">
+						</div>
+					</div>	
+				</div>	
+			<div style="text-align: right;">
+				<input type="button" value="取消" onclick="window.location.href=&#39;login.html&#39;" style="color:#cc0033;background-color: #ffc4c4;width:80px;height:32px;font-size: 14px;border:0px;border-radius: 3px;">
+				<input type="button" value="本人填报" onclick="window.location.href=&#39;login.html&#39;" style="color:#004400;background-color: #bfeebf;width:80px;height:32px;font-size: 14px;border:0px;border-radius: 3px;">
+			</div>
+			
+			<div align="center">
+			<span style="font-size: 12px;color:#787878">郑州大学疫情防控领导小组、信息化办公室自主研制，版权所有</span>
+			</div>
+			<div style="WIDTH: 4px;; HEIGHT: 100%;float:right;"></div>
+			</div>
+
+		<script>
+			init();
+		</script>
+	
+
+
+<div class="_th_cover-all-show-times _th_hidden">
+    <div class="_th_times">x1</div>
+</div><style type="text/css">
+        ._th-container ._th-item {
+            margin-bottom: 3px;
+            position: relative;
+            width: 0;
+            height: 0;
+            cursor: pointer;
+            opacity: .3;
+            background-color: aquamarine;
+            border-radius: 100%;
+            text-align: center;
+            line-height: 30px;
+            -webkit-transition: all .35s;
+            -o-transition: all .35s;
+            transition: all .35s;
+            right: 30px;
+        }
+
+        ._th-container ._th-item, ._th-container ._th-click-hover, ._th_cover-all-show-times ._th_times {
+            -webkit-box-shadow: 4px 5px 10px 6px #b2b2b2;
+            box-shadow: 4px 5px 10px 6px #b2b2b2;
+        }
+
+        ._th-container:hover ._th-item._item-x2 {
+            margin-left: 18px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px
+        }
+
+        ._th-container:hover ._th-item._item-x-2 {
+            margin-left: 17px;
+            width: 38px;
+            height: 38px;
+            line-height: 38px
+        }
+
+        ._th-container:hover ._th-item._item-xx2 {
+            width: 36px;
+            height: 36px;
+            margin-left: 16px;
+            line-height: 36px
+        }
+
+        ._th-container:hover ._th-item._item-xx-2 {
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            margin-left: 14px
+        }
+
+        ._th-container:hover ._th-item._item-reset {
+            width: 30px;
+            line-height: 30px;
+            height: 30px;
+            margin-left: 10px
+        }
+
+        ._th-click-hover {
+            position: relative;
+            -webkit-transition: all .5s;
+            -o-transition: all .5s;
+            transition: all .5s;
+            height: 45px;
+            width: 45px;
+            cursor: pointer;
+            opacity: .6;
+            border-radius: 100%;
+            background-color: aquamarine;
+            text-align: center;
+            line-height: 45px;
+            right: 0
+        }
+
+        ._th-container:hover {
+            left: -5px
+        }
+
+        ._th-container {
+            font-size: 12px;
+            -webkit-transition: all .5s;
+            -o-transition: all .5s;
+            transition: all .5s;
+            left: -30px;
+            top: 20%;
+            position: fixed;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            z-index: 100000;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            display: flex;
+            width: 58px;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                    flex-direction: row;
+        }
+
+        ._th-container ._th-item:hover {
+            opacity: .8;
+            background-color: #5fb492;
+            color: aliceblue
+        }
+
+        ._th-container ._th-item:active {
+            opacity: .9;
+            background-color: #1b3a26;
+            color: aliceblue
+        }
+
+        ._th-container:hover ._th-click-hover {
+            opacity: .8
+        }
+
+        ._th-container:hover ._th-item {
+            opacity: .6;
+            right: 0
+        }
+
+        ._th-container ._th-click-hover:hover {
+            opacity: .8;
+            background-color: #5fb492;
+            color: aliceblue
+        }
+
+        ._th_cover-all-show-times {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            opacity: 1;
+            font-weight: 900;
+            font-size: 30px;
+            color: #4f4f4f;
+            background-color: rgba(0, 0, 0, 0.1)
+        }
+
+        ._th_cover-all-show-times._th_hidden {
+            z-index: -99999;
+            opacity: 0;
+            -webkit-transition: 1s all;
+            -o-transition: 1s all;
+            transition: 1s all
+        }
+
+        ._th_cover-all-show-times ._th_times {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(127, 255, 212, 0.51);
+            text-align: center;
+            line-height: 300px;
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            margin-top: -150px;
+            margin-right: -150px
+        }
